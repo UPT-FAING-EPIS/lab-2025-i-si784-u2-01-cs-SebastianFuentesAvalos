@@ -1,0 +1,75 @@
+name: Publish Coverage Report
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar .NET 8
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+
+      - name: Restaurar dependencias
+        run: |
+          cd MyMath
+          dotnet restore
+
+      - name: Crear directorio de cobertura
+        run: |
+          cd MyMath
+          mkdir -p Cobertura
+
+      - name: Ejecutar pruebas con cobertura
+        run: |
+          cd MyMath
+          dotnet test Math.Tests/Math.Tests.csproj \
+            --collect:"XPlat Code Coverage" \
+            --results-directory ./TestResults \
+            --logger trx \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+        continue-on-error: true
+
+      - name: Mover archivo de cobertura
+        run: |
+          cd MyMath
+          find ./TestResults -name "coverage.cobertura.xml" -exec cp {} ./Cobertura/coverage.xml \;
+
+      - name: Verificar archivo de cobertura
+        run: |
+          cd MyMath
+          ls -la ./Cobertura/
+          if [ -f "./Cobertura/coverage.xml" ]; then
+            echo "Archivo de cobertura encontrado"
+            cat ./Cobertura/coverage.xml | head -10
+          else
+            echo "Archivo de cobertura NO encontrado"
+            find . -name "*.xml" -type f
+          fi
+
+      - name: Instalar ReportGenerator
+        run: dotnet tool install -g dotnet-reportgenerator-globaltool
+
+      - name: Generar reporte HTML
+        run: |
+          cd MyMath
+          reportgenerator \
+            -reports:./Cobertura/coverage.xml \
+            -targetdir:./Cobertura/report \
+            -reporttypes:Html
+        continue-on-error: true
+
+      - name: Publicar reporte en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./MyMath/Cobertura/report
+          destination_dir: cobertura

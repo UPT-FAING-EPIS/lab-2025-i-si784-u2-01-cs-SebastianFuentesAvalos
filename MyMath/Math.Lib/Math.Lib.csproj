@@ -4,6 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageId>Math.Lib</PackageId>
+    <Authors>Sebastian Fuentes</Authors>
+    <Version>1.0.0-2022073902</Version>
+    <Description>Biblioteca matemática con raíz cuadrada</Description>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>

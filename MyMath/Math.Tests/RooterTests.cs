@@ -1,20 +1,12 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using Math.Lib;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Math.Tests
 {
     [TestClass]
     public class RooterTests
     {
-        [TestMethod]
-        public void BasicRooterTest()
-        {
-            Rooter rooter = new Rooter();
-            double expectedResult = 2.0;
-            double input = expectedResult * expectedResult;
-            double actualResult = rooter.SquareRoot(input);
-            Assert.AreEqual(expectedResult, actualResult, delta: expectedResult / 100);
-        }
         [TestMethod]
         public void RooterValueRange()
         {
@@ -28,6 +20,7 @@ namespace Math.Tests
             double actualResult = rooter.SquareRoot(input);
             Assert.AreEqual(expectedResult, actualResult, delta: expectedResult / 1000);
         }
+        
         [TestMethod]
         public void RooterTestNegativeInputx()
         {
@@ -42,21 +35,47 @@ namespace Math.Tests
             }
             Assert.Fail();
         }
+        
         [TestMethod]
-        public void RooterTestNegativeInputWithMessage()
+        public void RooterThrowsExceptionWithCorrectMessage()
         {
-            Rooter rooter = new Rooter();
+            var rooter = new Rooter();
+
             try
             {
-                rooter.SquareRoot(-5);
+                rooter.SquareRoot(-10);
+                Assert.Fail("No se lanzó la excepción esperada.");
             }
-            catch (System.ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
-                Console.WriteLine("Mensaje de excepción: " + ex.Message);
-                StringAssert.Contains(ex.Message, "El valor ingresado es invalido, solo se puede ingresar números positivos");
-                return;
+                // Verifico que el mensaje comience con la cadena deseada:
+                string mensajeEsperado = "El valor ingresado es invalido, solo se puede ingresar números positivos";
+                Assert.IsTrue(
+                    ex.Message.StartsWith(mensajeEsperado, StringComparison.Ordinal),
+                    $"Se esperaba que Message empezara con:\n  {mensajeEsperado}\npero fue:\n  {ex.Message}"
+                );
+                
+                // Opcionalmente, también podrías verificar ex.ParamName:
+                Assert.AreEqual("input", ex.ParamName);
             }
-            Assert.Fail("Se esperaba una excepción ArgumentOutOfRangeException con mensaje personalizado.");
         }
+        [TestMethod]
+        public void SqrtOfNineIsThree()
+        {
+            Rooter rooter = new Rooter();
+            double result = rooter.SquareRoot(9.0);
+            Assert.AreEqual(3.0, result, 0.001);
+        }
+
+        [TestMethod]
+        public void SqrtOfZeroIsZero()
+        {
+            Rooter rooter = new Rooter();
+            double result = rooter.SquareRoot(0.0);
+            Assert.AreEqual(0.0, result, 0.001);
+        }
+
+
+
     }
 }
