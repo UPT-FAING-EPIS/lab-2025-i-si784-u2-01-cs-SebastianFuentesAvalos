@@ -1,0 +1,72 @@
+{
+  "source_base_path": "/home/runner/work/lab-2025-i-si784-u2-01-cs-SebastianFuentesAvalos/lab-2025-i-si784-u2-01-cs-SebastianFuentesAvalos/MyMath",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Math.Lib.Rooter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Math.Lib.Rooter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Math.Lib.Rooter",
+      "Summary": "<p sourcefile=\"api/Math.Lib.Rooter.yml\" sourcestartlinenumber=\"1\">Proporciona funciones matemáticas personalizadas, como el cálculo de raíces cuadradas.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Math.Lib.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Math.Lib.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Math.Lib",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/introduction.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
